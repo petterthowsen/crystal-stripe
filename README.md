@@ -9,7 +9,7 @@ Add this to your application's `shard.yml`:
 ```yaml
 dependencies:
   stripe:
-    github: petterthowsen/stripe
+    github: petterthowsen/crystal-stripe
 ```
 
 Then run:
