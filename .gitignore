@@ -1,0 +1,5 @@
+/lib/
+/bin/
+/.shards/
+*.dwarf
+/spec/stripe_key.txt

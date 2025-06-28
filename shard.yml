@@ -1,0 +1,13 @@
+name: stripe
+version: 0.1.0
+
+authors:
+  - Petter Thowsen <petterthowsen@gmail.com>
+
+targets:
+  stripe:
+    main: src/stripe.cr
+
+crystal: '>= 1.16.3'
+
+license: MIT

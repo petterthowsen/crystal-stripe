@@ -1,0 +1,39 @@
+name: Crystal Stripe CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        crystal: [latest, nightly]
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Crystal
+        uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: ${{ matrix.crystal }}
+      
+      - name: Install dependencies
+        run: shards install
+      
+      - name: Run tests
+        run: crystal spec
+      
+      - name: Check formatting
+        run: crystal tool format --check
+      
+      # Optional static analysis
+      - name: Run Ameba (Static Code Analysis)
+        if: matrix.crystal == 'latest'
+        run: |
+          shards install
+          bin/ameba

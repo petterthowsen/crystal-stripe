@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.15.1">
+<meta name="crystal_docs.project_version" content="0.1.0">
+<meta name="crystal_docs.project_name" content="stripe">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="stripe">
+  <title>Stripe::Client - stripe 0.1.0</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          stripe
+        </a>
+      </h1>
+
+      <span class="project-version">
+        0.1.0
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="stripe/Stripe" data-name="stripe">
+      <a href="../Stripe.html">Stripe</a>
+      
+        <ul>
+  
+  <li class=" " data-id="stripe/Stripe/APIConnectionError" data-name="stripe::apiconnectionerror">
+      <a href="../Stripe/APIConnectionError.html">APIConnectionError</a>
+      
+    </li>
+  
+  <li class=" " data-id="stripe/Stripe/APIError" data-name="stripe::apierror">
+      <a href="../Stripe/APIError.html">APIError</a>
+      
+    </li>
+  
+  <li class=" " data-id="stripe/Stripe/AuthenticationError" data-name="stripe::authenticationerror">
+      <a href="../Stripe/AuthenticationError.html">AuthenticationError</a>
+      
+    </li>
+  
+  <li class=" " data-id="stripe/Stripe/Balance" data-name="stripe::balance">
+      <a href="../Stripe/Balance.html">Balance</a>
+      
+    </li>
+  
+  <li class=" " data-id="stripe/Stripe/CardError" data-name="stripe::carderror">
+      <a href="../Stripe/CardError.html">CardError</a>
+      
+    </li>
+  
+  <li class=" current" data-id="stripe/Stripe/Client" data-name="stripe::client">
+      <a href="../Stripe/Client.html">Client</a>
+      
+    </li>
+  
+  <li class=" " data-id="stripe/Stripe/IdempotencyError" data-name="stripe::idempotencyerror">
+      <a href="../Stripe/IdempotencyError.html">IdempotencyError</a>
+      
+    </li>
+  
+  <li class=" " data-id="stripe/Stripe/InvalidRequestError" data-name="stripe::invalidrequesterror">
+      <a href="../Stripe/InvalidRequestError.html">InvalidRequestError</a>
+      
+    </li>
+  
+  <li class=" " data-id="stripe/Stripe/PermissionError" data-name="stripe::permissionerror">
+      <a href="../Stripe/PermissionError.html">PermissionError</a>
+      
+    </li>
+  
+  <li class=" " data-id="stripe/Stripe/RateLimitError" data-name="stripe::ratelimiterror">
+      <a href="../Stripe/RateLimitError.html">RateLimitError</a>
+      
+    </li>
+  
+  <li class="parent " data-id="stripe/Stripe/Resources" data-name="stripe::resources">
+      <a href="../Stripe/Resources.html">Resources</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="stripe/Stripe/Resources/Balance" data-name="stripe::resources::balance">
+      <a href="../Stripe/Resources/Balance.html">Balance</a>
+      
+        <ul>
+  
+  <li class=" " data-id="stripe/Stripe/Resources/Balance/BalanceObject" data-name="stripe::resources::balance::balanceobject">
+      <a href="../Stripe/Resources/Balance/BalanceObject.html">BalanceObject</a>
+      
+    </li>
+  
+  <li class=" " data-id="stripe/Stripe/Resources/Balance/Funds" data-name="stripe::resources::balance::funds">
+      <a href="../Stripe/Resources/Balance/Funds.html">Funds</a>
+      
+    </li>
+  
+  <li class="parent " data-id="stripe/Stripe/Resources/Balance/Transaction" data-name="stripe::resources::balance::transaction">
+      <a href="../Stripe/Resources/Balance/Transaction.html">Transaction</a>
+      
+        <ul>
+  
+  <li class=" " data-id="stripe/Stripe/Resources/Balance/Transaction/FeeDetail" data-name="stripe::resources::balance::transaction::feedetail">
+      <a href="../Stripe/Resources/Balance/Transaction/FeeDetail.html">FeeDetail</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="stripe/Stripe/SignatureVerificationError" data-name="stripe::signatureverificationerror">
+      <a href="../Stripe/SignatureVerificationError.html">SignatureVerificationError</a>
+      
+    </li>
+  
+  <li class=" " data-id="stripe/Stripe/StripeError" data-name="stripe::stripeerror">
+      <a href="../Stripe/StripeError.html">StripeError</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    class
+  </span> Stripe::<wbr>Client
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../Stripe/Client.html">Stripe::Client</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>The <code><a href="../Stripe/Client.html">Client</a></code> class handles communication with the Stripe API.</p>
+<p>It provides methods for making requests to the API, handling authentication,
+and processing responses.</p>
+<h2><a id="examples" class="anchor" href="#examples">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Examples</h2>
+<pre><code class="language-crystal"><span class="c"># Create a client with your API key</span>
+client <span class="o">=</span> <span class="t">Stripe</span><span class="t">::</span><span class="t">Client</span>.new(api_key: <span class="t">ENV</span>[<span class="s">&quot;STRIPE_API_KEY&quot;</span>])
+
+<span class="c"># Make a request</span>
+response <span class="o">=</span> client.request(<span class="n">:get</span>, <span class="s">&quot;/v1/balance&quot;</span>)
+
+<span class="c"># With API version specified</span>
+client <span class="o">=</span> <span class="t">Stripe</span><span class="t">::</span><span class="t">Client</span>.new(
+  api_key: <span class="t">ENV</span>[<span class="s">&quot;STRIPE_API_KEY&quot;</span>],
+  api_version: <span class="s">&quot;2025-05-28.basil&quot;</span>
+)
+
+<span class="c"># For Connect accounts</span>
+client <span class="o">=</span> <span class="t">Stripe</span><span class="t">::</span><span class="t">Client</span>.new(
+  api_key: <span class="t">ENV</span>[<span class="s">&quot;STRIPE_API_KEY&quot;</span>],
+  stripe_account: <span class="s">&quot;acct_1032D82eZvKYlo2C&quot;</span>
+)</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      stripe/client.cr
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="API_BASE">
+        <strong>API_BASE</strong> = <code><span class="s">&quot;https://api.stripe.com&quot;</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Base URL for the Stripe API</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="API_VERSION">
+        <strong>API_VERSION</strong> = <code><span class="s">&quot;2025-05-28.basil&quot;</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Default API version to use for all requests</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="DEFAULT_CONNECT_TIMEOUT">
+        <strong>DEFAULT_CONNECT_TIMEOUT</strong> = <code><span class="n">30</span>.seconds</code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Default connection timeout in seconds</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="DEFAULT_READ_TIMEOUT">
+        <strong>DEFAULT_READ_TIMEOUT</strong> = <code><span class="n">80</span>.seconds</code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Default read timeout in seconds</p>
+      </dd>
+      
+    
+  </dl>
+
+
+
+  
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28api_key%3AString%2Capi_version%3AString%3DAPI_VERSION%2Cstripe_account%3AString%7CNil%3Dnil%2Cconnect_timeout%3ATime%3A%3ASpan%3DDEFAULT_CONNECT_TIMEOUT%2Cread_timeout%3ATime%3A%3ASpan%3DDEFAULT_READ_TIMEOUT%29-class-method" class="signature"><strong>.new</strong>(api_key : String, api_version : String = <span class="t">API_VERSION</span>, stripe_account : String | Nil = <span class="n">nil</span>, connect_timeout : Time::Span = <span class="t">DEFAULT_CONNECT_TIMEOUT</span>, read_timeout : Time::Span = <span class="t">DEFAULT_READ_TIMEOUT</span>)</a>
+        
+          <div class="summary"><p>Initialize a new Stripe client</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#__flatten_params%28params%3AHash%7CNamedTuple%2Cparent_key%3AString%7CNil%3Dnil%29%3AHash%28String%2CString%29-instance-method" class="signature"><strong>#__flatten_params</strong>(params : Hash | NamedTuple, parent_key : String | Nil = <span class="n">nil</span>) : Hash(String, String)</a>
+        
+          <div class="summary"><p>Special method for testing - allows test access to the private method</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#api_key%3AString-instance-method" class="signature"><strong>#api_key</strong> : String</a>
+        
+          <div class="summary"><p>@return [String] The API key used for requests</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#api_version%3AString-instance-method" class="signature"><strong>#api_version</strong> : String</a>
+        
+          <div class="summary"><p>@return [String] The API version used for requests</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#request%28method%3ASymbol%2Cpath%3AString%2Cparams%3AHash%7CNil%3Dnil%2Cheaders%3AHTTP%3A%3AHeaders%7CNil%3Dnil%2Cidempotency_key%3AString%7CNil%3Dnil%29%3AJSON%3A%3AAny-instance-method" class="signature"><strong>#request</strong>(method : Symbol, path : String, params : Hash | Nil = <span class="n">nil</span>, headers : HTTP::Headers | Nil = <span class="n">nil</span>, idempotency_key : String | Nil = <span class="n">nil</span>) : JSON::Any</a>
+        
+          <div class="summary"><p>Make a request to the Stripe API</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#stripe_account%3AString%7CNil-instance-method" class="signature"><strong>#stripe_account</strong> : String | Nil</a>
+        
+          <div class="summary"><p>@return [String?] The Stripe account ID used for Connect requests</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(api_key:String,api_version:String=API_VERSION,stripe_account:String|Nil=nil,connect_timeout:Time::Span=DEFAULT_CONNECT_TIMEOUT,read_timeout:Time::Span=DEFAULT_READ_TIMEOUT)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(api_key : String, api_version : String = <span class="t">API_VERSION</span>, stripe_account : String | Nil = <span class="n">nil</span>, connect_timeout : Time::Span = <span class="t">DEFAULT_CONNECT_TIMEOUT</span>, read_timeout : Time::Span = <span class="t">DEFAULT_READ_TIMEOUT</span>)
+
+        <a class="method-permalink" href="#new%28api_key%3AString%2Capi_version%3AString%3DAPI_VERSION%2Cstripe_account%3AString%7CNil%3Dnil%2Cconnect_timeout%3ATime%3A%3ASpan%3DDEFAULT_CONNECT_TIMEOUT%2Cread_timeout%3ATime%3A%3ASpan%3DDEFAULT_READ_TIMEOUT%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Initialize a new Stripe client</p>
+<p>@param api_key [String] The Stripe API key
+@param api_version [String?] The Stripe API version
+@param stripe_account [String?] The Stripe account ID for Connect requests
+@param connect_timeout [Time::Span] Connection timeout for HTTP requests
+@param read_timeout [Time::Span] Read timeout for HTTP requests</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="__flatten_params(params:Hash|NamedTuple,parent_key:String|Nil=nil):Hash(String,String)-instance-method">
+      <div class="signature">
+        
+        def <strong>__flatten_params</strong>(params : Hash | NamedTuple, parent_key : String | Nil = <span class="n">nil</span>) : Hash(String, String)
+
+        <a class="method-permalink" href="#__flatten_params%28params%3AHash%7CNamedTuple%2Cparent_key%3AString%7CNil%3Dnil%29%3AHash%28String%2CString%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Special method for testing - allows test access to the private method</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="api_key:String-instance-method">
+      <div class="signature">
+        
+        def <strong>api_key</strong> : String
+
+        <a class="method-permalink" href="#api_key%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>@return [String] The API key used for requests</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="api_version:String-instance-method">
+      <div class="signature">
+        
+        def <strong>api_version</strong> : String
+
+        <a class="method-permalink" href="#api_version%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>@return [String] The API version used for requests</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="request(method:Symbol,path:String,params:Hash|Nil=nil,headers:HTTP::Headers|Nil=nil,idempotency_key:String|Nil=nil):JSON::Any-instance-method">
+      <div class="signature">
+        
+        def <strong>request</strong>(method : Symbol, path : String, params : Hash | Nil = <span class="n">nil</span>, headers : HTTP::Headers | Nil = <span class="n">nil</span>, idempotency_key : String | Nil = <span class="n">nil</span>) : JSON::Any
+
+        <a class="method-permalink" href="#request%28method%3ASymbol%2Cpath%3AString%2Cparams%3AHash%7CNil%3Dnil%2Cheaders%3AHTTP%3A%3AHeaders%7CNil%3Dnil%2Cidempotency_key%3AString%7CNil%3Dnil%29%3AJSON%3A%3AAny-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Make a request to the Stripe API</p>
+<p>@param method [Symbol] The HTTP method to use (:get, :post, :delete, or :patch)
+@param path [String] The path to request
+@param params [Hash?] The parameters to send
+@param headers [HTTP::Headers?] Additional headers to send
+@param idempotency_key [String?] Optional idempotency key to prevent duplicate requests
+@return [JSON::Any] The parsed JSON response</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="stripe_account:String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>stripe_account</strong> : String | Nil
+
+        <a class="method-permalink" href="#stripe_account%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>@return [String?] The Stripe account ID used for Connect requests</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>
