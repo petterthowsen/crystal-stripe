@@ -121,11 +121,23 @@ module Stripe
                 when :get
                   @http_client.get(full_path, headers: request_headers)
                 when :post
-                  @http_client.post(full_path, headers: request_headers, body: body)
+                  if body
+                    @http_client.post(full_path, headers: request_headers, form: body)
+                  else
+                    @http_client.post(full_path, headers: request_headers)
+                  end
                 when :delete
-                  @http_client.delete(full_path, headers: request_headers, body: body)
+                  if body
+                    @http_client.delete(full_path, headers: request_headers, body: body)
+                  else
+                    @http_client.delete(full_path, headers: request_headers)
+                  end
                 when :patch
-                  @http_client.patch(full_path, headers: request_headers, body: body)
+                  if body
+                    @http_client.patch(full_path, headers: request_headers, body: body)
+                  else
+                    @http_client.patch(full_path, headers: request_headers)
+                  end
                 else
                   raise ArgumentError.new("Unsupported HTTP method: #{method}")
                 end
