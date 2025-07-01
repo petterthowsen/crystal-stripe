@@ -63,12 +63,9 @@ module Stripe
       @api_key : String,
       @api_version : String = API_VERSION,
       @stripe_account : String? = nil,
-      connect_timeout : Time::Span = DEFAULT_CONNECT_TIMEOUT,
-      read_timeout : Time::Span = DEFAULT_READ_TIMEOUT
+      @connect_timeout : Time::Span = DEFAULT_CONNECT_TIMEOUT,
+      @read_timeout : Time::Span = DEFAULT_READ_TIMEOUT
     )
-      @http_client = HTTP::Client.new(URI.parse(API_BASE))
-      @http_client.connect_timeout = connect_timeout
-      @http_client.read_timeout = read_timeout
     end
 
     # Performs a request to the Stripe API.
@@ -111,33 +108,32 @@ module Stripe
         end
       when :post, :delete, :patch
         if params && !params.empty?
-          flattened = flatten_params(params)
-          body = flattened
-          request_headers["Content-Type"] = "application/x-www-form-urlencoded"
+          body = flatten_params(params)
         end
       end
       
-      # Make the request
+      # Make the request using static methods (fiber-safe)
+      full_url = "#{API_BASE}#{full_path}"
       response = case method
                 when :get
-                  @http_client.get(full_path, headers: request_headers)
+                  HTTP::Client.get(full_url, headers: request_headers)
                 when :post
                   if body
-                    @http_client.post(full_path, headers: request_headers, form: body)
+                    HTTP::Client.post(full_url, headers: request_headers, form: body)
                   else
-                    @http_client.post(full_path, headers: request_headers)
+                    HTTP::Client.post(full_url, headers: request_headers)
                   end
                 when :delete
                   if body
-                    @http_client.delete(full_path, headers: request_headers, form: body)
+                    HTTP::Client.delete(full_url, headers: request_headers, form: body)
                   else
-                    @http_client.delete(full_path, headers: request_headers)
+                    HTTP::Client.delete(full_url, headers: request_headers)
                   end
                 when :patch
                   if body
-                    @http_client.patch(full_path, headers: request_headers, form: body)
+                    HTTP::Client.patch(full_url, headers: request_headers, form: body)
                   else
-                    @http_client.patch(full_path, headers: request_headers)
+                    HTTP::Client.patch(full_url, headers: request_headers)
                   end
                 else
                   raise ArgumentError.new("Unsupported HTTP method: #{method}")
