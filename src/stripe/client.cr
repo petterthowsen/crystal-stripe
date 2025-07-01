@@ -111,7 +111,8 @@ module Stripe
         end
       when :post, :delete, :patch
         if params && !params.empty?
-          body = URI::Params.encode(flatten_params(params))
+          flattened = flatten_params(params)
+          body = flattened
           request_headers["Content-Type"] = "application/x-www-form-urlencoded"
         end
       end
@@ -128,13 +129,13 @@ module Stripe
                   end
                 when :delete
                   if body
-                    @http_client.delete(full_path, headers: request_headers, body: body)
+                    @http_client.delete(full_path, headers: request_headers, form: body)
                   else
                     @http_client.delete(full_path, headers: request_headers)
                   end
                 when :patch
                   if body
-                    @http_client.patch(full_path, headers: request_headers, body: body)
+                    @http_client.patch(full_path, headers: request_headers, form: body)
                   else
                     @http_client.patch(full_path, headers: request_headers)
                   end
