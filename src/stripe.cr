@@ -12,6 +12,7 @@ require "./stripe/resources/price"
 require "./stripe/resources/subscription"
 require "./stripe/resources/promotion_code"
 require "./stripe/resources/coupon"
+require "./stripe/resources/checkout_session"
 
 # The `Stripe` module provides a Crystal interface to the Stripe API.
 #
@@ -36,7 +37,7 @@ require "./stripe/resources/coupon"
 # end
 # ```
 module Stripe
-  VERSION = "0.1.3"
+  VERSION = "0.1.5"
   
   # Default client for simple access without creating client instances
   class_getter client : Client? = nil
