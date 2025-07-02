@@ -1,6 +1,8 @@
 require "http/client"
 require "json"
 require "uri"
+require "socket"
+require "openssl"
 require "./errors"
 
 module Stripe
@@ -112,35 +114,150 @@ module Stripe
         end
       end
       
-      # Make the request using static methods (fiber-safe)
-      full_url = "#{API_BASE}#{full_path}"
-      response = case method
-                when :get
-                  HTTP::Client.get(full_url, headers: request_headers)
-                when :post
-                  if body
-                    HTTP::Client.post(full_url, headers: request_headers, form: body)
-                  else
-                    HTTP::Client.post(full_url, headers: request_headers)
-                  end
-                when :delete
-                  if body
-                    HTTP::Client.delete(full_url, headers: request_headers, form: body)
-                  else
-                    HTTP::Client.delete(full_url, headers: request_headers)
-                  end
-                when :patch
-                  if body
-                    HTTP::Client.patch(full_url, headers: request_headers, form: body)
-                  else
-                    HTTP::Client.patch(full_url, headers: request_headers)
-                  end
-                else
-                  raise ArgumentError.new("Unsupported HTTP method: #{method}")
-                end
+      # Make the request using manual TCP connection
+      response = make_tcp_request(method, full_path, request_headers, body)
       
       # Handle response
       handle_response(response)
+    end
+    
+    # Make a manual TCP request to avoid HTTP::Client issues with form data
+    private def make_tcp_request(method : Symbol, path : String, headers : HTTP::Headers, body : Hash(String, String)?) : HTTP::Client::Response
+      uri = URI.parse(API_BASE)
+      host = uri.host.not_nil!
+      port = uri.port || (uri.scheme == "https" ? 443 : 80)
+      
+      # Prepare the request body
+      request_body = ""
+      if body && !body.empty?
+        request_body = URI::Params.encode(body)
+        headers["Content-Type"] = "application/x-www-form-urlencoded"
+        headers["Content-Length"] = request_body.bytesize.to_s
+      else
+        headers["Content-Length"] = "0"
+      end
+      
+      # Build the HTTP request
+      http_request = String.build do |str|
+        str << "#{method.to_s.upcase} #{path} HTTP/1.1\r\n"
+        str << "Host: #{host}\r\n"
+        str << "Connection: close\r\n"
+        
+        headers.each do |key, values|
+          values.each do |value|
+            str << "#{key}: #{value}\r\n"
+          end
+        end
+        
+        str << "\r\n"
+        str << request_body if !request_body.empty?
+      end
+      
+      # Make the connection
+      socket = if uri.scheme == "https"
+        tcp_socket = TCPSocket.new(host, port)
+        context = OpenSSL::SSL::Context::Client.new
+        context.verify_mode = OpenSSL::SSL::VerifyMode::PEER
+        OpenSSL::SSL::Socket::Client.new(tcp_socket, context: context, sync_close: true, hostname: host)
+      else
+        TCPSocket.new(host, port)
+      end
+      
+      begin
+        # Send the request
+        socket.write(http_request.to_slice)
+        socket.flush
+        
+        # Read the response
+        response_data = socket.gets_to_end
+        
+        # Parse the HTTP response
+        parse_http_response(response_data)
+      ensure
+        socket.close
+      end
+    end
+    
+    # Parse HTTP response from raw string
+    private def parse_http_response(response_data : String) : HTTP::Client::Response
+      # Split on \r\n\r\n to separate headers from body
+      header_body_split = response_data.split("\r\n\r\n", 2)
+      
+      if header_body_split.size < 2
+        # Fallback to \n\n split for servers that don't use \r\n
+        header_body_split = response_data.split("\n\n", 2)
+      end
+      
+      header_section = header_body_split[0]
+      body = header_body_split.size > 1 ? header_body_split[1] : ""
+      
+      lines = header_section.split(/\r?\n/)
+      
+      # Parse status line
+      status_line = lines[0]
+      status_parts = status_line.split(" ", 3)
+      
+      unless status_parts.size >= 2
+        raise Stripe::APIError.new(
+          status_code: 0,
+          message: "Invalid HTTP response: #{response_data[0...200]}"
+        )
+      end
+      
+      status_code = status_parts[1].to_i
+      
+      # Parse headers
+      headers = HTTP::Headers.new
+      
+      lines[1..].each do |line|
+        next if line.strip.empty?
+        
+        if line.includes?(":")
+          key, value = line.split(":", 2)
+          headers[key.strip] = value.strip
+        end
+      end
+      
+      # Handle chunked transfer encoding
+      if headers["Transfer-Encoding"]? == "chunked"
+        body = decode_chunked_body(body)
+      end
+      
+      HTTP::Client::Response.new(status_code, body, headers)
+    end
+    
+    # Decode chunked transfer encoding
+    private def decode_chunked_body(chunked_body : String) : String
+      result = String.build do |str|
+        remaining = chunked_body
+        
+        while !remaining.empty?
+          # Find the first \r\n which indicates end of chunk size
+          newline_pos = remaining.index("\r\n")
+          break unless newline_pos
+          
+          # Get chunk size (in hex)
+          chunk_size_hex = remaining[0...newline_pos]
+          chunk_size = chunk_size_hex.to_i(16)
+          
+          # If chunk size is 0, we're done
+          break if chunk_size == 0
+          
+          # Skip past the \r\n after chunk size
+          chunk_start = newline_pos + 2
+          chunk_end = chunk_start + chunk_size
+          
+          # Extract the chunk data
+          if chunk_end <= remaining.size
+            str << remaining[chunk_start...chunk_end]
+          end
+          
+          # Move past this chunk and its trailing \r\n
+          remaining = remaining[(chunk_end + 2)..]
+        end
+      end
+      
+      result
     end
     
     # Generate default headers for all Stripe API requests
@@ -207,7 +324,7 @@ module Stripe
         rescue e : JSON::ParseException
           raise Stripe::APIError.new(
             status_code: response.status_code,
-            message: "Invalid JSON response: #{e.message}"
+            message: "Invalid JSON response: #{e.message}. Response body: #{response.body[0...200]}"
           )
         end
       else
@@ -264,7 +381,7 @@ module Stripe
           # Handle case where response is not valid JSON
           raise Stripe::APIError.new(
             status_code: response.status_code,
-            message: "Invalid error response: #{e.message}"
+            message: "Invalid error response: #{e.message}. Response body: #{response.body[0...200]}"
           )
         rescue e : KeyError | TypeCastError
           # Handle case where error object does not have expected fields

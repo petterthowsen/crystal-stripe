@@ -37,7 +37,7 @@ require "./stripe/resources/checkout_session"
 # end
 # ```
 module Stripe
-  VERSION = "0.1.5"
+  VERSION = "0.1.6"
   
   # Default client for simple access without creating client instances
   class_getter client : Client? = nil
